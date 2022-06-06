@@ -5,7 +5,7 @@ using Xunit;
 
 namespace AsposeTestTask.Logic.Tests
 {
-    public class UnitTest1
+    public class SalaryCalculationTests
     {
         [Fact]
         public void CalculationOfEmployeeSalaryTest()
