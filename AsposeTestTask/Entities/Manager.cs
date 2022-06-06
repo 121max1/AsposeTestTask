@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace AsposeTestTask.Logic.Entities
 {
-    public class Manager : Worker
+    public class Manager : WorkerWithSubordinates
     {
-        public IList<Worker> Subordinates { get; set;}
-
         public override double CalculateSalary()
         {
             var basePayment = Salary + (Experience >= 8 ? Salary * 0.05 * 8 : Salary * Experience * 0.05);

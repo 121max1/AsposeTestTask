@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace AsposeTestTask.Logic.Entities
 {
-    public class Sales : Worker
+    public class Sales : WorkerWithSubordinates
     {
-        public IList<Worker> Subordinates { get; set; }
-
         public override double CalculateSalary()
         {
             var basePayment = Salary + (Experience >= 35 ? Salary * 0.01 * 35 : Salary * Experience * 0.01);
@@ -31,24 +29,14 @@ namespace AsposeTestTask.Logic.Entities
                     var worker = workersQueue.Dequeue();
                     additionalPayment += worker.CalculateSalary();
 
-                    if (worker is Manager)
+                    if (worker is WorkerWithSubordinates)
                     {
-                        var manager = worker as Manager;
-                        foreach(var subordinate in manager.Subordinates)
+                        var workerWithSubordinates = worker as WorkerWithSubordinates;
+                        foreach (var subordinate in workerWithSubordinates.Subordinates)
                         {
                             workersQueue.Enqueue(subordinate);
                         }
-                    }
-
-                    if(worker is Sales)
-                    {
-                        var manager = worker as Sales;
-                        foreach (var subordinate in manager.Subordinates)
-                        {
-                            workersQueue.Enqueue(subordinate);
-                        }
-                    }
-
+                    } 
                     n--;
                 }
             }
